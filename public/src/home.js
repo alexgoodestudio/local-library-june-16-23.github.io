@@ -25,28 +25,28 @@ function getBooksBorrowedCount(books) {
 }
 
   //It returns an array containing five objects or fewer that represents the most common occurring genres, ordered from most common to least.
-  function getMostCommonGenres(books){
-    const commonGenres = {};
-   
-    books.forEach((bookObj) => {
-      const { genre } = bookObj;
-      if (commonGenres[genre] === undefined) {
-        commonGenres[genre] = 1;
+  function getMostCommonGenres(books) {
+    const commonGenres = books.reduce((accum, { genre }) => {
+      if (accum[genre] === undefined) {
+        accum[genre] = 1;
       } else {
-        commonGenres[genre] += 1;
+        accum[genre] += 1;
       }
-    });
+      return accum;
+    }, {});
   
     const result = [];
     for (let genreKey in commonGenres) {
       let obj = { name: genreKey, count: commonGenres[genreKey] };
       result.push(obj);
     }
-
-    result.sort((a, b) => b.count - a.count); 
-
+    console.log(result)
+    result.sort((a, b) => b.count - a.count);
+  
     return result.slice(0, 5);
+    
   }
+
 /*
   [
     { name: "Nonfiction", count: 9 },
@@ -55,6 +55,7 @@ function getBooksBorrowedCount(books) {
     ...
   ]
 */
+
 function getMostPopularBooks(books) {
   const newObjs = books.map((bookObj)=>{
     const {title,borrows} = bookObj
@@ -76,7 +77,7 @@ function getMostPopularAuthors(books =[], authors=[]) {
     const {authorId, borrows} = bookObj
     const authorIdMatcher = authors.find((authorObj) => authorObj.id === authorId)
     const obj ={name: nameHelper(authorIdMatcher), count:borrows.length}
-    console.log(obj)
+    // console.log(obj)
     results.push(obj)
   })
   return results;
