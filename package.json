@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "build": "react-scripts build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "docker:build": "docker image build . -t thinkful-ed/zid-pf-project-loc-library-01-qualified-assignment",
